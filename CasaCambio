@@ -1,1 +1,134 @@
+/***
+*@Programa: CasaDeCambio.java
+*ETE COMPUTACION
+* Profesora:    Adriana Vega Palos
+* Grupo:        62A
+* Autor:        Ramirez Zepeda Luis Fernando
+*Fecha:         13/10/2021.
+*Descripcion: Creacion de un programa de cambio de divisas
+***/
+package CasaCambio;
 
+import java.awt.Color;
+import static java.awt.Component.CENTER_ALIGNMENT;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.*;
+import javax.swing.*;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+
+public class CasaCambio extends JFrame
+implements ActionListener {
+    private JPanel panel;
+    private JLabel etiquetaImporte, etiquetaConversion;
+    private JTextField textoImporte, textoConvertir;
+    private JButton salir, dolaresPesos, pesosDolares;
+
+    public static void main(String[] args) {
+        CasaCambio marco = new CasaCambio();
+        marco.setSize(800, 200);
+        marco.setLocationRelativeTo(null);
+        marco.setTitle("Casa Cambio");
+        marco.crearGUI();
+        marco.setVisible(true);
+    }
+    public void crearGUI() {
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        Container ventana = getContentPane();
+        ventana.setLayout(new FlowLayout() );
+
+        //Titulos y fuentes
+        
+        Font tipoLetra2 = new Font("Arial Black",4,16);
+        Font tipoLetra = new Font("Comic Sans",Font.ITALIC,16);//en numerico: 0=font.plain,1=fontbold,2=font.italic,3=bond e italic
+        
+        // Parte de los colores (espero que combinen bien esque soy daltonico)
+        
+        etiquetaImporte = new JLabel("Importe: ");
+        etiquetaImporte.setVisible(true);
+        etiquetaImporte.setFont(tipoLetra2);
+        etiquetaImporte.setForeground(new Color(0, 255, 255));
+        
+        ventana.add(etiquetaImporte);
+        
+        textoImporte = new JTextField(10);
+        textoImporte.setEditable(true);
+        textoImporte.setEditable(true);
+        textoImporte.setFont(tipoLetra);
+        ventana.add(textoImporte);
+        
+        etiquetaConversion = new JLabel("Conversión: ");
+        etiquetaConversion.setVisible(true);
+        etiquetaConversion.setFont(tipoLetra2);
+        etiquetaConversion.setForeground(new Color(218, 165, 32));
+        ventana.add(etiquetaConversion);
+        
+        textoConvertir = new JTextField(10);
+        textoConvertir.setEditable(true);
+        textoConvertir.setEditable(false);
+        textoConvertir.setFont(tipoLetra);
+        ventana.add(textoConvertir);
+        
+        Color nuevoColor = new Color(144, 238, 144);
+        Color nuevoColor2 = new Color(143, 188, 143);
+        salir = new JButton("Salir UwU");
+        ventana.add(salir);
+        salir.setEnabled(true);
+        salir.setAlignmentX(CENTER_ALIGNMENT);
+        salir.addActionListener(this);
+        salir.setForeground(nuevoColor);
+        salir.setBackground(nuevoColor2);
+        salir.setFont(tipoLetra);
+        
+
+        dolaresPesos = new JButton("De Dolares a Pesos");
+        ventana.add(dolaresPesos);
+        dolaresPesos.setEnabled(true);
+        dolaresPesos.setAlignmentX(CENTER_ALIGNMENT);
+        dolaresPesos.addActionListener(this);
+        dolaresPesos.setForeground(nuevoColor);
+        dolaresPesos.setBackground(nuevoColor2);
+        dolaresPesos.setFont(tipoLetra);
+
+        pesosDolares = new JButton("De Pesos a Dolares");
+        ventana.add(pesosDolares);
+        pesosDolares.setEnabled(true);
+        pesosDolares.setAlignmentX(CENTER_ALIGNMENT);
+        pesosDolares.addActionListener(this);
+        pesosDolares.setForeground(nuevoColor);
+        pesosDolares.setBackground(nuevoColor2);
+        pesosDolares.setFont(tipoLetra);
+        }
+        @Override
+        public void actionPerformed (ActionEvent event){
+            Object origen = event.getSource();
+            String tipoCambioDolar, cantidad, cant2;
+            double tipoCambioDolarD, conversion, resultadoDolares, resultadoPesos;
+
+            //tipoCambioDolar = JOptionPane.showImputDialog("Escribe el tipo de cambio del dia");
+            //tipoCambioDolarD = Double.parseDouble(tipoCambioDolar);
+
+            cantidad = textoImporte.getText();
+            conversion = Double.parseDouble(cantidad);
+            
+            if(origen == dolaresPesos){
+                tipoCambioDolar = JOptionPane.showInputDialog("Escribe el cambio actual");
+                tipoCambioDolarD = Double.parseDouble(tipoCambioDolar);
+                resultadoPesos = conversion * tipoCambioDolarD;
+                cant2 = Double.toString(resultadoPesos);
+                textoConvertir.setText("$"+cant2+" MXN");
+
+            }else if(origen == pesosDolares){
+                tipoCambioDolar = JOptionPane.showInputDialog("Escribe el cambio actual");
+                tipoCambioDolarD = Double.parseDouble(tipoCambioDolar);
+                resultadoDolares = conversion / tipoCambioDolarD;
+                cant2 = Double.toString(resultadoDolares);
+                textoConvertir.setText("$"+cant2+" USD");
+
+            }else{
+                    //Salir del programa
+                    System.exit(0);// Sale del Sistema
+            }
+        }
+}
